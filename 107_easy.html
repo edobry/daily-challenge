@@ -1,0 +1,31 @@
+<html>
+<script>
+	function encodeChar(char){
+		return (char.toLowerCase().charCodeAt(0)-96).toString();
+	}
+
+	function decodeChar(char){
+		return String.fromCharCode(char+96);
+	}
+
+	function encode (input){
+		return encodeChar(input[0]) + (input.length > 1 ? encode(input.substring(1)) : "");
+	}
+
+	function recurseDecode(input, out){
+		if(input.length == 0) {
+			console.log(out);
+			return;
+		}
+		var first = parseInt(input[0],10);
+		var firstTwo = parseInt(input.substring(0,2),10);
+		if(input.length > 1 && (first == 1 || (first == 2 && firstTwo < 27))) {
+			recurseDecode(input.substring(2), out + decodeChar(firstTwo));
+		}
+		
+		recurseDecode(input.substring(1), out + decodeChar(first));
+	}
+</script>
+<body>
+</body>
+</html>
